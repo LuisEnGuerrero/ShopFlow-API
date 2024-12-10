@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.routes import productos, carrito, visibilidad
 from app.database import init_db, db
 
@@ -12,6 +13,15 @@ app = FastAPI(
         "name": "Luis Enrique Guerrero",
         "email": "LuisEnGuerrero@yahoo.com"
     },
+)
+
+# Agregar el middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Cambiar "*" por una lista específica como ["http://localhost:3000"] en producción
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos: GET, POST, PUT, DELETE
+    allow_headers=["*"],  # Permitir todos los encabezados
 )
 
 # Inicializar la base de datos al inicio de la aplicación

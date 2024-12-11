@@ -1,14 +1,20 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from bson import ObjectId
+from pydantic import BaseModel, Field
 from app.database import db
 from app.schemas import ProductoCreate, ProductoUpdate, ProductoDB
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 
 router = APIRouter(
     prefix="/productos",
     tags=["productos"]
 )
+
+# Actualizar stock de un producto
+class ProductoUpdate(BaseModel):
+    stock: Optional[int] = Field(None, ge=0, description="Cantidad en stock")
+    precio: Optional[float] = Field(None, ge=0, description="Precio del producto")
 
 # Crear un producto
 @router.post("/", response_model=ProductoDB, status_code=status.HTTP_201_CREATED)
@@ -66,3 +72,19 @@ async def delete_producto(producto_id: str):
     result = await db.productos_.delete_one({"_id": ObjectId(producto_id)})
     if result.deleted_count == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Producto no encontrado")
+
+# Actualizar stock de un producto
+@router.patch("/productos/{producto_id}")
+async def actualizar_producto(producto_id: str, actualizacion: ProductoUpdate):
+    campos_a_actualizar = actualizacion.dict(exclude_unset=True)
+
+    if not campos_a_actualizar:
+        raise HTTPException(status_code=400, detail="No se proporcionaron campos para actualizar")
+
+    result = await db.productos.update_one(
+        {"_id": ObjectId(producto_id)},
+        {"$set": campos_a_actualizar}
+    )
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Producto no encontrado o no actualizado")
+    return {"mensaje": "Producto actualizado con éxito", "campos_actualizados": campos_a_actualizar}

@@ -64,17 +64,8 @@ async def update_producto(producto_id: str, updates: ProductoUpdate):
     del producto["_id"]
     return producto
 
-# Eliminar un producto
-@router.delete("/{producto_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_producto(producto_id: str):
-    if not ObjectId.is_valid(producto_id):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="ID inválido")
-    result = await db.productos_.delete_one({"_id": ObjectId(producto_id)})
-    if result.deleted_count == 0:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Producto no encontrado")
-
 # Actualizar stock de un producto
-@router.patch("/productos/{producto_id}")
+@router.patch("/{producto_id}")
 async def actualizar_producto(producto_id: str, actualizacion: ProductoUpdate):
     campos_a_actualizar = actualizacion.dict(exclude_unset=True)
 
@@ -88,3 +79,13 @@ async def actualizar_producto(producto_id: str, actualizacion: ProductoUpdate):
     if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Producto no encontrado o no actualizado")
     return {"mensaje": "Producto actualizado con éxito", "campos_actualizados": campos_a_actualizar}
+
+# Eliminar un producto
+@router.delete("/{producto_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_producto(producto_id: str):
+    if not ObjectId.is_valid(producto_id):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="ID inválido")
+    result = await db.productos_.delete_one({"_id": ObjectId(producto_id)})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Producto no encontrado")
+

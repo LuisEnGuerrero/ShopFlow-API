@@ -77,14 +77,14 @@ ShopFlow API/
 ```
 
 ### 📦 Dependencias
-FastAPI: Framework para construir APIs rápidas y modernas.
-Uvicorn: Servidor ASGI para correr la aplicación.
-Motor: Cliente asincrónico para MongoDB.
-Pydantic: Validación de datos y esquemas.
+- **FastAPI:** Framework para construir APIs rápidas y modernas.
+- **Uvicorn:** Servidor ASGI para correr la aplicación.
+- **Motor:** Cliente asincrónico para MongoDB.
+- **Pydantic:** Validación de datos y esquemas.
 
 ### 🔧 Configuración Adicional
-MongoDB Atlas: Asegúrate de configurar la colección productos_ en tu base de datos para iniciar correctamente.
-Pruebas: Puedes usar herramientas como Postman para realizar pruebas de los endpoints.
+- **MongoDB Atlas:** Asegúrate de configurar la colección productos_ en tu base de datos para iniciar correctamente.
+- **Pruebas:** Puedes usar herramientas como Postman para realizar pruebas de los endpoints.
 
 ### 🤝 Contribuciones
 Si deseas contribuir, por favor abre un issue o un pull request. Cualquier ayuda es bienvenida.

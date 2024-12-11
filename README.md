@@ -29,7 +29,6 @@ Crea y activa un entorno virtual:
 
 
 ```bash
-Copiar código
 python -m venv env
 source env/bin/activate  # En Windows: .\env\Scripts\activate
 ```
@@ -37,30 +36,31 @@ Instala las dependencias:
 
 
 ```bash
-Copiar código
 pip install -r requirements.txt
 ```
 Configura el archivo .env: Crea un archivo .env en el directorio raíz y agrega las siguientes variables:
 
-### makefile
-Copiar código
+```makefile
 MONGODB_URI=<tu-cadena-de-conexion-de-MongoDB>
 DB_NAME=shopflow
+```
+
 ▶️ Uso
 Inicia el servidor:
 
-
 ```bash
-Copiar código
 uvicorn app.main:app --reload
 ```
+El Servidor cargará en: http://localhost:8000/
+
 Accede a la documentación interactiva:
 
 ### Swagger UI
-ReDoc
-📂 Estructura del Proyecto
-markdown
-Copiar código
+http://localhost:8000/Docs/
+
+
+### 📂 Estructura del Proyecto
+```bash
 ShopFlow API/
 ├── app/
 │   ├── __init__.py
@@ -74,6 +74,7 @@ ShopFlow API/
 │   │   ├── visibilidad.py
 ├── .env
 ├── requirements.txt
+```
 
 ### 📦 Dependencias
 FastAPI: Framework para construir APIs rápidas y modernas.
